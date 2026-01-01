@@ -1,27 +1,53 @@
 <script setup lang="ts">
-	import { ref, computed } from 'vue';
+	import { computed } from 'vue';
 	
-	const themes = ['Card', 'Diagnostics', 'Gallery', 'Metrics', 'Scanner', 'Skills', 'System', 'Terminal']
+	const route = useRoute()
 	
-	const currentIndex = ref(0)
+	const themes = [
+		{ url: '/cardexamples', component: 'Card' }, 
+		{ url: '/diagnosticexamples', component: 'Diagnostics' }, 
+		{ url: '/galleryexamples', component: 'Gallery' }, 
+		{ url: '/metricexamples', component: 'Metrics' }, 
+		{ url: '/scannerexamples', component: 'Scanner' }, 
+		{ url: '/skillsexamples', component: 'Skills' }, 
+		{ url: '/systemexamples', component: 'System' }, 
+		{ url: '/terminalexamples', component: 'Terminal' }
+	]
+	
+	const currentIndex = computed(() => {
+		const currentPath = route.path
+		const index = themes.findIndex(theme => theme.url === currentPath)
+		return index >= 0 ? index : 0
+	})
 	
 	const isFirst = computed(() => currentIndex.value === 0 || currentIndex.value === -1)
 	const isLast = computed(() => currentIndex.value === themes.length - 1 || currentIndex.value === -1)
 
-	onMounted(() => {
-		currentIndex.value = -1
-	})
-	
 	const nextPage = () => {
-		if (!isLast.value) currentIndex.value++
+		if (!isLast.value) {
+			const nextIndex = currentIndex.value + 1
+			const nextTheme = themes[nextIndex]
+			if (nextTheme) {
+				navigateTo(nextTheme.url)
+			}
+		}
 	}
 	
 	const prevPage = () => {
-		if (!isFirst.value) currentIndex.value--
+		if (!isFirst.value) {
+			const prevIndex = currentIndex.value - 1
+			const prevTheme = themes[prevIndex]
+			if (prevTheme) {
+				navigateTo(prevTheme.url)
+			}
+		}
 	}
 	
 	const selectTheme = (index: number) => {
-		currentIndex.value = index
+		const theme = themes[index]
+		if (theme) {
+			navigateTo(theme.url)
+		}
 	}
 	</script>
 	
@@ -44,13 +70,13 @@
 							@click="selectTheme(index)"
 							class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 relative group"
 							:class="[
-								index === currentIndex 
+								index === currentIndex
 									? 'text-white bg-zinc-800 shadow-inner' 
 									: 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'
 							]"
 						>	
-							<NuxtLink to="/cardexamples">
-								{{ theme }}
+							<NuxtLink :to="theme.url">
+								{{ theme.component }}
 							</NuxtLink>
 						</button>
 						<button 
