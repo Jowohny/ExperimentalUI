@@ -47,11 +47,65 @@
 		}
 	]
 
+const linkItem = [
+	{
+		id: "39284",
+		title: "YouTube",
+		link: "https://youtube.com",
+		color: "text-amber-600"
+	},
+	{
+		id: "21345",
+		title: "Google",
+		link: "https://google.com",
+		color: "text-blue-600"
+	},
+	{
+		id: "25321",
+		title: "Netflix",
+		link: "https://netfix.com",
+		color: "text-orange-600"
+	},
+	{
+		id: "25234",
+		title: "Facebook",
+		link: "https://facebook.com",
+		color: "text-indigo-600"
+	},
+	{
+		id: "74543",
+		title: "Amazon",
+		link: "https://amazon.com",
+		color: "text-amber-600"
+	},
+	{
+		id: "83735",
+		title: "Github",
+		link: "https://github.com",
+		color: "text-blue-600"
+	},
+	{
+		id: "84635",
+		title: "Johny's Dev Portfolio",
+		link: "https://vujohny.com",
+		color: "text-orange-600"
+	},
+	{
+		id: "18347",
+		title: "LinkedIn",
+		link: "https://linkedin.com",
+		color: "text-indigo-600"
+	}
+]
+
 </script>
 
 <template>
-	<div class="grid grid-cols-5 gap-4 px-4">
+	<div class="grid grid-cols-5 gap-4 px-4 pb-12">
 		<CardTypeBase :class="card.colSpan" v-for="card in bentoItems" :item="card" />
 	</div>
-	<Diagnostics/>
+
+	<div class="flex flex-wrap gap-4 px-4">
+		<CardTypeLink class="w-fit" v-for="card in linkItem" :item="card"/>
+	</div>
 </template>
