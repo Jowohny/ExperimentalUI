@@ -2,27 +2,24 @@
 	import { ref, onMounted, onUnmounted } from 'vue'
 	import gsap from 'gsap'
 	
-	interface Card {
+	interface LinkCard {
 		id: number
 		title: string
-		subtitle: string
-		desc: string
-		tag: string
+		link: string
 		color: string
 	}
 	
 	const props = defineProps<{
-		item: Card
+		item: LinkCard
 	}>()
 	
 	const cardRef = ref<HTMLElement | null>(null)
 	const contentRef = ref<HTMLElement | null>(null)
-	const glowRef = ref<HTMLElement | null>(null)
 	
 	let ctx: gsap.Context
 	
-	const MAX_ROTATION = 8
-	const DEPTH = 30 
+	const MAX_ROTATION = 20
+	const DEPTH = 30
 	
 	onMounted(() => {
 		if (!cardRef.value) return
@@ -45,7 +42,7 @@
 	})
 	
 	const handleMove = (e: MouseEvent) => {
-		if (!cardRef.value || !contentRef.value || !glowRef.value) return
+		if (!cardRef.value || !contentRef.value) return
 	
 		const rect = cardRef.value.getBoundingClientRect()
 		const centerX = rect.left + rect.width / 2
@@ -72,18 +69,10 @@
 			duration: 0.4,
 			ease: 'power2.out'
 		})
-	
-		gsap.to(glowRef.value, {
-			opacity: 1,
-			x: e.clientX - rect.left,
-			y: e.clientY - rect.top,
-			duration: 0.2,
-			ease: 'power1.out'
-		})
 	}
 	
 	const handleLeave = () => {
-		if (!cardRef.value || !contentRef.value || !glowRef.value) return
+		if (!cardRef.value || !contentRef.value) return
 	
 		gsap.to(cardRef.value, {
 			rotateX: 0,
@@ -99,46 +88,41 @@
 			duration: 0.7,
 			ease: 'elastic.out(1, 0.6)'
 		})
-	
-		gsap.to(glowRef.value, {
-			opacity: 0,
-			duration: 0.5
-		})
 	}
 	</script>
 	
 	<template>
-		<div class="relative w-full h-full perspective-1000 group">
+		<div class="relative perspective-1000 group">
 			
 			<div 
 				ref="cardRef"
-				class="relative w-full h-full bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-2xl"
+				class="relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden"
 			>
-				
-				<div 
-					ref="glowRef"
-					class="absolute top-0 left-0 w-[500px] h-[500px] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,rgba(255,255,255,0.15)_0%,transparent_70%)] opacity-0 pointer-events-none mix-blend-overlay z-10"
-				></div>
-	
-				<div :class="`absolute inset-0 bg-gradient-to-br ${item.color} opacity-10 z-0`"></div>
-				
-				<div class="absolute inset-0 z-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-	
-				<div ref="contentRef" class="relative z-20 h-full p-8 flex flex-col justify-between">
 					
-					<div class="flex justify-between items-start">
-						<p class="font-mono text-[10px] tracking-widest border border-zinc-700/50 rounded-full px-2 py-1 text-zinc-400 bg-zinc-900/50 backdrop-blur-md">
-							{{ item.tag }}
-						</p>
+				<div class="flex items-center bg-zinc-950 relative">
+    
+					<div
+						class="absolute inset-0 z-0 pointer-events-none"
+						:style="{
+							backgroundImage: `
+								linear-gradient(to right, #27272a 1px, transparent 1px),
+								linear-gradient(to bottom, #27272a 1px, transparent 1px)
+							`,
+							backgroundSize: '40px 40px',
+							maskImage: 'radial-gradient(ellipse 60% 60% at 50% 50%, #000 10%, transparent 80%)',
+							WebkitMaskImage: 'radial-gradient(ellipse 60% 60% at 50% 50%, #000 10%, transparent 80%)'
+						}"
+					></div> 
+					<div ref="contentRef" class="relative z-20 px-8 py-4 flex items-center gap-4">
+						<p :class="item.color" class="font-mono font-semibold tracking-wide text-center text-xl" >{{ item.title }}</p>
+						<NuxtLink :to="item.link" target="_blank">
+							<div class="w-8 h-8 rounded-full bg-zinc-800/50 flex items-center justify-center text-zinc-500 group-hover:bg-white group-hover:text-black transition-colors duration-300">
+								<svg class="w-4 h-4 transform group-hover:-rotate-45 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+							</div>
+						</NuxtLink>
 					</div>
-	
-					<div class="mt-4">
-						<h3 class="text-3xl font-bold text-white mb-1 tracking-tight">{{ item.title }}</h3>
-						<p class="text-sm font-mono text-emerald-400 mb-3">{{ item.subtitle }}</p>
-						<p class="text-zinc-400 text-sm leading-relaxed">{{ item.desc }}</p>
-					</div>
-	
-				</div>
+				</div>	
+
 			</div>
 		</div>
 	</template>
@@ -148,3 +132,5 @@
 		perspective: 1000px;
 	}
 	</style>
+
+	
