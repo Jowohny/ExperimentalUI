@@ -3,6 +3,7 @@
 	import gsap from 'gsap'
 	
 	interface LinkCard {
+		logo?: string
 		id: number
 		title: string
 		link: string
@@ -112,9 +113,14 @@
 							maskImage: 'radial-gradient(ellipse 60% 60% at 50% 50%, #000 10%, transparent 80%)',
 							WebkitMaskImage: 'radial-gradient(ellipse 60% 60% at 50% 50%, #000 10%, transparent 80%)'
 						}"
-					></div> 
+					></div>
 					<div ref="contentRef" class="relative z-20 px-8 py-4 flex items-center gap-4">
-						<p :class="item.color" class="font-mono font-semibold tracking-wide text-center text-xl" >{{ item.title }}</p>
+						<div v-if="item.logo" class="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden">
+							<img :src="item.logo" class="w-full h-full object-contain" loading="lazy"/>
+						</div>
+						<p :class="item.color" class="font-mono font-semibold tracking-wide text-center text-xl">
+							{{ item.title }}
+						</p>
 						<NuxtLink :to="item.link" target="_blank">
 							<div class="w-8 h-8 rounded-full bg-zinc-800/50 flex items-center justify-center text-zinc-500 group-hover:bg-white group-hover:text-black transition-colors duration-300">
 								<svg class="w-4 h-4 transform group-hover:-rotate-45 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
