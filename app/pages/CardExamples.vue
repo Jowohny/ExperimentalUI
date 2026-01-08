@@ -49,36 +49,42 @@
 
 const linkItem = [
 	{
+		logo: "/ButtonLogos/youtubelogo.png",
 		id: "39284",
 		title: "YouTube",
 		link: "https://youtube.com",
 		color: "text-amber-600"
 	},
 	{
+		logo: "/ButtonLogos/googlelogo.png",
 		id: "21345",
 		title: "Google",
 		link: "https://google.com",
 		color: "text-blue-600"
 	},
 	{
+		logo: "/ButtonLogos/netflixlogo.png",
 		id: "25321",
 		title: "Netflix",
-		link: "https://netfix.com",
+		link: "https://netflix.com",
 		color: "text-orange-600"
 	},
 	{
+		logo: "/ButtonLogos/facebooklogo.png",
 		id: "25234",
 		title: "Facebook",
 		link: "https://facebook.com",
 		color: "text-indigo-600"
 	},
 	{
+		logo: "/ButtonLogos/amazonlogo.png",
 		id: "74543",
 		title: "Amazon",
 		link: "https://amazon.com",
 		color: "text-amber-600"
 	},
 	{
+		logo: "/ButtonLogos/githublogo.png",
 		id: "83735",
 		title: "Github",
 		link: "https://github.com",
@@ -91,6 +97,7 @@ const linkItem = [
 		color: "text-orange-600"
 	},
 	{
+		logo: "/ButtonLogos/linkedinlogo.png",
 		id: "18347",
 		title: "LinkedIn",
 		link: "https://linkedin.com",
