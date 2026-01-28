@@ -116,9 +116,9 @@
 					}"
 				></div>
 	
-				<div ref="contentRef" class="relative z-10 px-6 pb-4 flex flex-col items-center h-full">
+				<div ref="contentRef" class="relative z-10 px-6 pb-4 flex flex-col items-end h-full">
 
-					<div class="flex justify-center" :class="item.color">
+					<div class="flex" :class="item.color">
 						<h3 class="font-sans font-semibold text-sm tracking-wide px-2 pt-3" :class="item.color">
 							{{ item.techType }}
 						</h3>
